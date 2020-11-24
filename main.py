@@ -2,16 +2,23 @@ import sys
 from random import choice
 from PyQt5 import uic
 from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
 
 class Example(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.initUI()
         self.qp = QPainter()
-        self.pushButton.clicked.connect(self.drawf)
         self.flag = False
+
+    def initUI(self):
+        self.setGeometry(300, 300, 500, 400)
+        self.setWindowTitle('Жёлтые окружности')
+        pb = QPushButton('Кнопка', self)
+        pb.resize(90, 30)
+        pb.move(10, 10)
+        pb.clicked.connect(self.drawf)
 
     def drawf(self):
         self.flag = True
@@ -25,9 +32,9 @@ class Example(QMainWindow):
             self.qp.end()
 
     def draw(self):
-        self.qp.setBrush(QColor(255, 255, 0))
+        self.qp.setBrush(QColor(choice(range(256)), choice(range(256)), choice(range(256))))
         coord = choice(range(5, 100))
-        self.qp.drawEllipse(choice(range(510)), choice(range(40, 390)), coord, coord)
+        self.qp.drawEllipse(choice(range(500)), choice(range(40, 400)), coord, coord)
 
 
 app = QApplication(sys.argv)
